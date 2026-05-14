@@ -1155,7 +1155,7 @@ function closeConfirmation() {
 // ═══ DRAWER ═══
 let drawerItem = null, selTier = 0;
 function openDrawer(card) {
-  const tiers = JSON.parse(card.dataset.tiers || '[{"qty":"1x","price":0}]');
+  const tiers = card.dataset.tiers ? JSON.parse(card.dataset.tiers) : [{ qty: '1x', price: Number(card.dataset.price) || 0 }];
   drawerItem = { id: card.dataset.id, name: card.dataset.name, sub: card.dataset.sub, img: card.dataset.img, badge: card.dataset.badge || 'Disponible', badgeType: card.dataset.badgeType||'', desc: card.dataset.desc, tiers };
   selTier = 0;
   const b = document.getElementById('drawerBadge');
