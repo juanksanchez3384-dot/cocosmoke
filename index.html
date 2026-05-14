@@ -1126,24 +1126,25 @@ function openCart() { document.getElementById('cartSidebar').classList.add('open
 function closeCart() { document.getElementById('cartSidebar').classList.remove('open'); document.getElementById('cartOverlay').classList.remove('open'); document.body.style.overflow=''; }
 
 // 4. Finaliza la orden y envía por WhatsApp
-function sendOrder() {
-  if (cart.length === 0) return alert("Tu carrito está vacío");
-  let mensaje = "¡Hola Coco Smoke! Quisiera confirmar este pedido:\n\n";
-  let total = 0;
-  cart.forEach((item, i) => {
-      const lineTotal = item.price * item.qty;
-    mensaje += `${i+1}. ${item.name} x${item.qty} - $${item.price.toLocaleString('es-CO')} c/u`;
-    if (item.qty > 1) mensaje += ` (subtotal $${lineTotal.toLocaleString('es-CO')})`;
-    mensaje += `\n`;
-    total += lineTotal;
-  });
-  mensaje += `\n*TOTAL: $${total.toLocaleString('es-CO')}*`;
-  mensaje += "\n\n¿Me confirman disponibilidad para seguir con la compra?";
+const WHATSAPP_PHONE = '573245901187'; // Número internacional de Coco Smoke
 
-  const phoneNumber = '573245901187'; // Cambia esto al número WhatsApp internacional de Coco Smoke
-  const whatsappURL = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(mensaje)}`;
-  window.open(whatsappURL, '_blank');
+function checkout() {
+  if (cart.length === 0) return alert("Tu carrito está vacío");
+  
+  let mensaje = "Hola Coco Smoke, me gustaría realizar el siguiente pedido:\n\n";
+  
+  cart.forEach(item => {
+    mensaje += `• ${item.name} x${item.qty} - $${(item.price * item.qty).toLocaleString('es-CO')}\n`;
+  });
+  
+  const total = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+  mensaje += `\n*Total a pagar: $${total.toLocaleString('es-CO')}*`;
+  
+  const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${encodeURIComponent(mensaje)}`;
+  window.open(url, '_blank');
 }
+
+function sendOrder() { checkout(); }
 
 function confirmAndCheckout() { sendOrder(); }
 
