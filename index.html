@@ -584,7 +584,7 @@ footer { margin-top: 80px; border-top: 1px solid var(--border); padding: 40px 52
         <p class="gcard-subtitle">95% THC · Edición Premium</p>
         <div class="gcard-footer">
           <div><div class="gcard-price">$ 45.000</div><div class="gcard-price-cop">COP</div></div>
-          <button class="btn-add-mini" onclick="addToCart(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg><span>Agregar</span></button>
+          <button type="button" class="btn-add-mini" onclick="openDrawer(this.closest('.gcard'))">Ver producto</button>
         </div>
       </div>
     </div>
@@ -1139,7 +1139,10 @@ function sendOrder() {
   });
   mensaje += `\n*TOTAL: $${total.toLocaleString('es-CO')}*`;
   mensaje += "\n\n¿Me confirman disponibilidad para seguir con la compra?";
-  window.open(`https://wa.me/TU_NUMERO?text=${encodeURIComponent(mensaje)}`, '_blank');
+
+  const phoneNumber = '573245901187'; // Cambia esto al número WhatsApp internacional de Coco Smoke
+  const whatsappURL = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(mensaje)}`;
+  window.open(whatsappURL, '_blank');
 }
 
 function confirmAndCheckout() { sendOrder(); }
